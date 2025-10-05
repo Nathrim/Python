@@ -38,14 +38,14 @@ def load_excel_data(file_path):
 
 st.title("Defects Status")
 
-# Load specific Excel file
-file_path = r"C:\Users\danjw\Greater Wellington Regional Council\[Ext] Metlink RTI 2.0 - User Acceptance Testing\User Acceptance Testing Plan.xlsx"
+# File uploader
+uploaded_file = st.file_uploader("Upload Excel file", type=['xlsx', 'xls'])
 
-if os.path.exists(file_path):
-    st.info(f"Loading: {os.path.basename(file_path)}")
-    data = load_excel_data(file_path)
+if uploaded_file is not None:
+    st.info(f"Loading: {uploaded_file.name}")
+    data = load_excel_data(uploaded_file)
 else:
-    st.error(f"File not found: {file_path}")
+    st.warning("Please upload an Excel file to continue")
     st.stop()
 
 if data is None:
@@ -253,7 +253,11 @@ html_content = f"""
 </html>
 """
 
+# Try to save to original folder, fallback to current directory
 export_folder = r"C:\Users\danjw\Greater Wellington Regional Council\[Ext] Metlink RTI 2.0 - User Acceptance Testing"
+if not os.path.exists(export_folder):
+    export_folder = os.getcwd()
+    
 export_file_path = os.path.join(export_folder, "Defects Dashboard.html")
 
 try:
