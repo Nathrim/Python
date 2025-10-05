@@ -51,7 +51,7 @@ else:
 if data is None:
     st.stop()
 
-st.success(f"Loaded {len(data)} defects from {os.path.basename(file_path)}")
+st.success(f"Loaded {len(data)} defects from {uploaded_file.name}")
 
 # Metrics
 wip = len(data[data['status'] == 'WIP'])
